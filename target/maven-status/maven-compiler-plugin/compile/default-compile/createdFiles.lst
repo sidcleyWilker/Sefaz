@@ -1,0 +1,17 @@
+br\com\desafiosefaz\connectiondb\ParamDAO.class
+br\com\desafiosefaz\util\Util.class
+br\com\desafiosefaz\beans\UsuarioBean.class
+br\com\desafiosefaz\dao\UsuarioDao.class
+br\com\desafiosefaz\beans\AbstractBean.class
+br\com\desafiosefaz\connectiondb\ConnectionDB.class
+br\com\desafiosefaz\model\Telefone.class
+br\com\desafiosefaz\util\Authorization.class
+br\com\desafiosefaz\beans\TemaBean.class
+br\com\desafiosefaz\util\CreateDb.class
+br\com\desafiosefaz\service\UsuarioService.class
+br\com\desafiosefaz\beans\LoginBean.class
+br\com\desafiosefaz\model\Model.class
+br\com\desafiosefaz\service\TelefoneService.class
+br\com\desafiosefaz\dao\TelefoneDao.class
+br\com\desafiosefaz\model\Usuario.class
+br\com\desafiosefaz\enums\TipoTelefone.class

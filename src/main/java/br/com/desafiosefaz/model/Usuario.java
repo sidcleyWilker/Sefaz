@@ -17,6 +17,16 @@ public class Usuario extends Model{
 		super();
 	}
 
+
+	public Usuario(String nome, String email, String senha) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+	}
+
+
+
 	public String getNome() {
 		return nome;
 	}

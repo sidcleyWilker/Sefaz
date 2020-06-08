@@ -26,6 +26,11 @@ public class LoginBean extends AbstractBean{
 	public void init() {
 		usuario = new Usuario();
 		usuarioService = UsuarioService.getInstance();
+		try {
+			usuarioService.insert(new Usuario("teste","teste@teste.com","teste"));
+		} catch (ClassNotFoundException | NamingException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String logar() {

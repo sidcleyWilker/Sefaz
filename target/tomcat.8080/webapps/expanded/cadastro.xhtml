@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="_template.xhtml">
+
+	<ui:define name="cabecalho">
+		<h1>Cadastro</h1>
+	</ui:define>
+	<ui:define name="conteudo">
+	    <h:form>
+	    <p:messages id="idMessage"/>
+	    
+	    
+    <p:fieldset legend="Cadastro">
+		<p:outputLabel value="Nome" for="idnome"></p:outputLabel>
+	    <p:inputText id="idnome" value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="Nome Obrigatorio">
+	    </p:inputText><br/>
+	    
+		<p:outputLabel value="E-mail" for="idemail"></p:outputLabel>
+	    <p:inputText id="idemail" value="#{usuarioBean.usuario.email}" required="true" requiredMessage="E-mail Obrigatorio" 
+	    validatorMessage="formato do E-mail teste@teste.com">
+	    	<f:attribute name="type" value="email" />
+	    	<f:validateRegex
+				pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+			 />
+	    </p:inputText><br/>
+	    
+	    
+	     <p:outputLabel value="Senha" for="idsenha"></p:outputLabel>
+	    <p:password id="idsenha" value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="Senha Obrigatorio"
+	     feedback="true" promptLabel="Informe a senha" weakLabel="fraca"
+                    goodLabel="media" strongLabel="forte" />
+	    <br/>
+	  </p:fieldset>
+	  
+	   <p:fieldset legend="Add Telefone">
+<!-- 	   		<h:form id="formTel"> -->
+	   		<p:outputLabel value="DDD" for="idDDD"></p:outputLabel>
+	    	<p:inputMask id="idDDD" value="#{usuarioBean.telefone.ddd}" mask="(999)">
+	    	</p:inputMask><br/>
+	    	
+	    	<p:outputLabel value="Numero" for="idNumero"></p:outputLabel>
+	    	<p:inputMask id="idNumero" value="#{usuarioBean.telefone.numero}" mask="99999-9999">
+	    	</p:inputMask><br/>
+	    	
+	    	<p:outputLabel value="Tipo" for="idTipo" ></p:outputLabel>
+	    	<p:selectOneMenu id="idTipo" value="#{usuarioBean.tipo}" >
+	    		<f:selectItem itemLabel="Residencial" itemValue="1" />
+            	<f:selectItem itemLabel="Comercial" itemValue="2" />
+	    	</p:selectOneMenu> <br/>
+	    	
+	    	<h:commandButton value="Adicionar" action="#{usuarioBean.adicionarTelefone}">
+	    		<f:ajax execute="idDDD idNumero idTipo" render="idDDD idNumero listaTel idMessage"/>
+	    	</h:commandButton>
+<!-- 	    	</h:form> -->
+
+			<p:dataTable id="listaTel" value="#{usuarioBean.usuario.telefones}" var="tel" emptyMessage="Não tem registro">
+				<f:facet name="telefone"> Telefones </f:facet>
+				<p:column headerText="Numero">
+		    		#{tel.ddd} #{tel.numero} #{tel.tipo}
+		    	</p:column>
+		    	<p:column headerText="#">
+		    		<h:commandLink value="Remover" action="#{usuarioBean.removerTelefone(tel)}">
+			    		<f:ajax render="listaTel"/>
+			    	</h:commandLink>
+		    	</p:column>
+		        
+			</p:dataTable>
+	   </p:fieldset>
+	    
+	    <p:commandButton value="cadastrar" action="#{usuarioBean.salvar}" update="@form" process="@form" />
+	    <br/>
+	    <p:commandLink value="Voltar" action="#{usuarioBean.listagem}" immediate="true" update="@form"/>
+	    </h:form>
+	    
+	</ui:define>
+</ui:composition>

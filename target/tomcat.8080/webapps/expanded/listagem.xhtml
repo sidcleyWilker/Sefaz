@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="_template.xhtml">
+
+	<ui:define name="cabecalho">
+		<p:outputPanel>Listagem</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+		<p:messages/>
+			<div class="ui-datatable ui-widget ui-datatable-reflow">
+	 		<p:dataTable value="#{usuarioBean.usuarios}" var="usu" emptyMessage="Não tem registro no banco" reflow="true" rows="5" paginator="true">
+	 		<f:facet name="header">Usuarios</f:facet>
+	 			<p:column headerText="ID">
+		    		<h:outputText value="#{usu.id}" />
+		    	</p:column>
+		    	<p:column headerText="Nome">
+		    		<h:outputText value="#{usu.nome}" />
+		    	</p:column>
+		    	<p:column headerText="E-mail">
+		    		<h:outputText value="#{usu.email}" />
+		    	</p:column>
+		    	<p:column headerText="#">
+		    		<p:commandButton action="#{usuarioBean.visualizar(usu)}" icon="fa fa-fw fa-search-plus" value="visualizar"
+		    		 oncomplete="PF('dlgRemover').show();" update="id_dlg"/> 
+		    		
+		    		
+		    		<p:commandButton action="#{usuarioBean.editar(usu)}" update="@form" process="@form" icon="fa fa-fw fa-edit" value="Editar" /> 
+		    		<p:commandButton  value="Remover" action="#{usuarioBean.deletar(usu)}" update="@form" process="@form"  icon="fa fa-fw fa-remove" />
+		    	</p:column>
+		    </p:dataTable>
+	    	</div>
+	    	<hr/>
+	    
+	    	<p:commandLink value="Cadastrar novo" update="@form" action="#{usuarioBean.cadastrarNovo}" immediate="true"/>
+	    </h:form>
+	    
+	     <p:dialog id="id_dlg" header="Detalhe do Usuário" widgetVar="dlgRemover">
+			
+			<p:outputLabel value="Nome:  #{usuarioBean.usuario.nome}" /> <br/>
+			<p:outputLabel value="E-mail: #{usuarioBean.usuario.email}" /><br/>
+			<p:outputLabel value="Senha: #{usuarioBean.usuario.senha}" /><br/>
+			
+			<p:dataTable value="#{usuarioBean.usuario.telefones}" var="tel" emptyMessage="Não tem registro" style="width: 400px;">
+				<f:facet name="telefone"> Telefones </f:facet>
+				<p:column headerText="Numero">
+		    		(#{tel.ddd}) #{tel.numero} #{tel.tipo}
+		    	</p:column>
+			</p:dataTable>
+
+			<p:commandButton value="Fechar" icon="ui-icon-close" onclick="PF('dlgRemover').hide();" />
+		</p:dialog>
+	</ui:define>
+</ui:composition>
